@@ -1,4 +1,7 @@
 from mlflow.tracking import MlflowClient
+import mlflow
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("Customer Churn Prediction")
 
 def register_best_model(experiment_name="Customer Churn Prediction"):
     """
@@ -34,5 +37,5 @@ def register_best_model(experiment_name="Customer Churn Prediction"):
     return model_version
 
 # Call the function after model training and comparison
-best_model_version = register_best_model()
+best_model_version = register_best_model("Customer Churn Prediction")
 print(f"Registered model version: {best_model_version.version}")

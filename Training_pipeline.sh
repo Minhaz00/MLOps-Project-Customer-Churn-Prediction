@@ -4,7 +4,7 @@
 echo "Starting MLflow..."
 
 
-docker-compose up -d -f Docker/docker-compose-mlflow.yaml
+docker-compose -f Docker/docker-compose-mlflow.yaml up -d
 
 # Wait for MLflow to be ready
 sleep 10
@@ -17,7 +17,8 @@ python3 Preprocessing/Preprocessing.py
 echo "Training models..."
 python3 Training/Logistic_regression.py
 python3 Training/Random_forest.py
-python3 Training/Xgboost_train.py
+python3 Training/SVM.py
+python3 Training/Xgboost.py
 
 # Register best model
 echo "Registering the best model..."

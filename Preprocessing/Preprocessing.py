@@ -7,7 +7,7 @@ import mlflow.sklearn
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("Customer Churn Prediction")
 
-df= pd.read_csv("../Data/Telco-Customer-Churn.csv")
+df= pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/Telco-Customer-Churn.csv")
 
 # Drop customerID column
 df = df.drop('customerID', axis=1)
@@ -74,7 +74,7 @@ print("\nTraining set shape:", X_train.shape)
 print("Testing set shape:", X_test.shape)
 
 # Save the preprocessed data
-X_train.to_csv("../Data/X_train.csv", index=False)
-X_test.to_csv("../Data/X_test.csv", index=False)
-y_train.to_csv("../Data/y_train.csv", index=False)
-y_test.to_csv("../Data/y_test.csv", index=False)
+X_train.to_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_train.csv", index=False)
+X_test.to_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_test.csv", index=False)
+y_train.to_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/y_train.csv", index=False)
+y_test.to_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/y_test.csv", index=False)

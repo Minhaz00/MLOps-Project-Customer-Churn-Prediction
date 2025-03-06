@@ -14,10 +14,10 @@ import pandas as pd
 import mlflow
 from mlflow.models import infer_signature
 
-X_train = pd.read_csv("../Data/X_train.csv")
-X_test = pd.read_csv("../Data/X_test.csv")
-y_train = pd.read_csv("../Data/y_train.csv")
-y_test = pd.read_csv("../Data/y_test.csv")
+X_train = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_train.csv")
+X_test = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_test.csv")
+y_train = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/y_train.csv")
+y_test = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/y_test.csv")
 
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("Customer Churn Prediction")
@@ -65,4 +65,16 @@ with mlflow.start_run(run_name="xgboost"):
     signature = infer_signature(X_train, pred_xgb)
     mlflow.sklearn.log_model(model_xgb, "xgboost_model", signature=signature)
 
-print(f"XGBoost Metrics: Accuracy={xgb}%, Precision={precision}, Recall={recall}, F1={f1}")
+    # Calculate precision, recall, and F1 score
+    precision = round(precision_score(y_test, pred_xgb) * 100, 2)
+    recall = round(recall_score(y_test, pred_xgb) * 100, 2)
+    f1 = round(f1_score(y_test, pred_xgb) * 100, 2)
+
+    # Log the additional metrics
+    mlflow.log_metric("precision", precision)
+    mlflow.log_metric("recall", recall)
+    mlflow.log_metric("f1_score", f1)
+
+    # Print the metrics
+    print(f"XGBoost Metrics: Accuracy={xgb}%, Precision={precision}%, Recall={recall}%, F1={f1}%")
+    print(f"XGBoost Metrics: Accuracy={xgb}%, Precision={precision}, Recall={recall}, F1={f1}")
