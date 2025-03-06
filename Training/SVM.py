@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 import mlflow
 from mlflow.models import infer_signature
+import pickle
+import os
 
 X_train = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_train.csv")
 X_test = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_test.csv")
@@ -67,6 +69,15 @@ with mlflow.start_run(run_name="svm_classifier"):
     # Log the model
     signature = infer_signature(X_train, pred_svm)
     mlflow.sklearn.log_model(model_svm, "svm_model", signature=signature)
+
+    # Save the model locally as a pickle file
+    model_dir = "Model"
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, "svm_model.pkl")
+    with open(model_path, "wb") as model_file:
+        pickle.dump(model_svm, model_file)
+
+    print(f"Model saved locally at: {model_path}")
 
 print(f"SVM Classifier Accuracy: {sv}%")
 print("\nClassification Report:")

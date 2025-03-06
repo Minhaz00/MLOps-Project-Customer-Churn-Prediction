@@ -13,6 +13,8 @@ import numpy as np
 import pandas as pd
 import mlflow
 from mlflow.models import infer_signature
+import pickle
+import os
 
 X_train = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_train.csv")
 X_test = pd.read_csv("/root/code/MLOps-Project-Customer-Churn-Prediction/Data/X_test.csv")
@@ -74,6 +76,15 @@ with mlflow.start_run(run_name="xgboost"):
     mlflow.log_metric("precision", precision)
     mlflow.log_metric("recall", recall)
     mlflow.log_metric("f1_score", f1)
+
+    # Save the model locally as a pickle file
+    model_dir = "Model"
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, "xgboost_model.pkl")
+    with open(model_path, "wb") as model_file:
+        pickle.dump(model_xgb, model_file)
+
+    print(f"Model saved locally at: {model_path}")
 
     # Print the metrics
     print(f"XGBoost Metrics: Accuracy={xgb}%, Precision={precision}%, Recall={recall}%, F1={f1}%")
