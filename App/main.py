@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 # Load the trained model
-MODEL_PATH = "./model.pkl"
+MODEL_PATH = "https://poridhi-mlflow-models-123-d862805.s3.ap-southeast-1.amazonaws.com/model.pkl"
 try:
     with open(MODEL_PATH, "rb") as model_file:
         model = pickle.load(model_file)
